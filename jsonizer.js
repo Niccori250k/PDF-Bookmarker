@@ -26,11 +26,11 @@ const argOptions = {
 }
 
 const preParse = process.argv.slice(2)
-const options = util({argOptions, preParse});
-const inputPath = options.value.input;
-const outputPath = options.value.output;
-const author = options.value.author;
-const title = options.value.title;
+const options = util.parseArgs({options: argOptions});
+const inputPath = options.values.input;
+const outputPath = options.values.output;
+const author = options.values.author;
+const title = options.values.title;
 
 function TreeNode(title, target, parent, style, opened, color, bookmark){
 	this.Title = title;
@@ -56,11 +56,11 @@ csv().fromFile(inputPath).then((rows) => {
 				new Array()
 			);
 		});
-		let meta = {"Info": {"BookTitle": "", "BookAuthor": ""}, "Outline": []};
+		let meta = {"Info": {"BookTitle": author, "BookAuthor": title}, "Outline": []};
 		let outline = [];
 		rawnodes.map((node) => {
 			if(node.Parent.toString() === ""){
-				outline.push({node});
+				outline.push(node);
 			} else {
 				rawnodes.map((tmpnode) => {
 					if(tmpnode.Title.toString() == node.Parent.toString()){
