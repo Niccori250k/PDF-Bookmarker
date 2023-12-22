@@ -1,13 +1,14 @@
 require 'hexapdf'
 require 'json'
+require 'optparse'
 
 Flag = {0 => nil, 1 => 0, 2 => 1, "Italic" => 0, "Bold" => 1}
 
 def bm_create(outline, bm = Hash.new)
-	if bm.key?(:Style)
+	if bm.key?(:Style) && bm[:Style] != ""
 		flag = Flag[bm[:Style]]
 	end
-	if bm.key?(:Color)
+	if bm.key?(:Color) && bm[:Color] != ""
 		color = bm[:Color]
 	else
 		color = "black"
@@ -25,10 +26,13 @@ def bm_create(outline, bm = Hash.new)
 	end
 end
 
-name = ARGF.argv[0].to_s
+options = ARGV.getopts("i:b:o:", "input:", "bookmark:", "output:", "no-optimize")
+input = (options["i"].nil? ? options["input"] : options["i"]).to_s
+json = (options["b"].nil? ? options["bookmark"].nil? ? input : options["bookmark"] : options["b"]).to_s.sub(/\.pdf$/, ".json")
+output = (options["o"].nil? ? options["output"] : options["o"]).to_s
 
-doc = HexaPDF::Document.open(name + ".pdf")
-info_raw = File.open(name + ".json").read
+doc = HexaPDF::Document.open(input)
+info_raw = File.open(json).read
 info = JSON.parse(info_raw, symbolize_names: true)
 doc.trailer.info[:Title] = info[:Info][:BookTitle]
 doc.trailer.info[:Author] = info[:Info][:BookAuthor]
@@ -38,5 +42,7 @@ info[:Outline].each do |bm|
 	bm_create(doc.outline, bm)
 end
 
-doc.task(:optimize, compact: true, compress_pages: true)
-doc.write(name + "_Bookmarked.pdf")
+unless options["no-optimize"]
+	doc.task(:optimize, compact: true, compress_pages: true)
+end
+doc.write(output)
