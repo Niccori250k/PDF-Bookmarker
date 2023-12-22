@@ -1,0 +1,29 @@
+{
+	"Info": {
+		"BookTitle": "a",
+		"BookAuthor": "a"
+	},
+	"Outline": [
+		{
+			"Target": 180,
+			"Title": "a",
+			"Style": 2
+		},
+		{
+			"Target": 192,
+			"Title": "a",
+			"Bookmark": [
+				{
+					"Title": "a",
+					"Target": 90
+				},
+				{
+					"Title": "a",
+					"Target": 29,
+					"Style": 1,
+					"Color": "red"
+				}
+			]
+		}
+	]
+}
