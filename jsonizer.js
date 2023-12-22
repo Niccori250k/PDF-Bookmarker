@@ -56,7 +56,7 @@ csv().fromFile(inputPath).then((rows) => {
 				new Array()
 			);
 		});
-		let meta = {"Info": {"BookTitle": author, "BookAuthor": title}, "Outline": []};
+		let meta = {"Info": {"BookTitle": title, "BookAuthor": author}, "Outline": []};
 		let outline = [];
 		rawnodes.map((node) => {
 			if(node.Parent.toString() === ""){
