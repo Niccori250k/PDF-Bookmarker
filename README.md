@@ -58,5 +58,6 @@ Some elements can be ommitted, for example,
 ```
 is valid.
 # Future development
-* More options e.g. input/output filename, whether to optimize
-* Json file generator (perhaps from pdftk's dump data?)
+* <s>More options e.g. input/output filename, whether to optimize</s> -> done
+* <s>Json file generator (perhaps from pdftk's dump data?)</s> -> partly done (from csv)
+* Provide a conprehensive document
