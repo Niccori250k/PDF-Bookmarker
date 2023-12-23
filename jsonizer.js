@@ -28,7 +28,7 @@ const argOptions = {
 const preParse = process.argv.slice(2)
 const options = util.parseArgs({options: argOptions});
 const inputPath = options.values.input;
-const outputPath = options.values.output;
+const outputPath = options.values.output != undefined ? options.values.output : inputPath.replace(/\.[^\.]+$/, ".json");
 const author = options.values.author;
 const title = options.values.title;
 
@@ -49,10 +49,10 @@ csv().fromFile(inputPath).then((rows) => {
 			return new TreeNode(
 				new String(row.Title),
 				new Number(row.Target),
-				new String(row.Parent),
-				new String(row.Style),
-				new Boolean(row.Opened),
-				new String(row.Color),
+				new String(row.Parent != undefined ? row.Parent : ""),
+				new String(row.Style != undefined ? row.Style : ""),
+				new Boolean(row.Opened != undefined ? row.Opened : false),
+				new String(row.Color != undefined ? row.Color : ""),
 				new Array()
 			);
 		});

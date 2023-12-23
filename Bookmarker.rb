@@ -38,11 +38,10 @@ doc.trailer.info[:Title] = info[:Info][:BookTitle]
 doc.trailer.info[:Author] = info[:Info][:BookAuthor]
 
 info[:Outline].each do |bm|
-	/bookmark_create(doc, bm[:Title], bm[:Target], bm[:Style], bm[:Bookmark])/
 	bm_create(doc.outline, bm)
 end
 
 unless options["no-optimize"]
-	doc.task(:optimize, compact: true, compress_pages: true)
+	doc.task(:optimize, compact: true, object_streams: :generate, xref_streams: :generate, compress_pages: true, prune_page_resources: true)
 end
 doc.write(output)
