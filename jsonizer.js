@@ -44,7 +44,7 @@ function TreeNode(title, target, parent, style, opened, color, bookmark){
 
 let node = {}
 
-csv().fromFile(inputPath).then((rows) => {
+csv({delimiter: [",", "\t"]}).fromFile(inputPath).then((rows) => {
 		rawnodes = rows.map((row) => {
 			return new TreeNode(
 				new String(row.Title),
